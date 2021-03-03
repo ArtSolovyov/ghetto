@@ -1,16 +1,10 @@
 import React from 'react';
 import { Toast, ToastBody, ToastHeader } from 'reactstrap';
-import GetName from '../overwatchService/overwatchService';
+import OverwatchService from '../overwatchService/overwatchService';
 
-let api = new GetName;
 
-const getName = api('frst', '2873');
-const name = getName.username;
-const lvl = getName.level;
 
-const result = ''
-
-export default class LittleCards extends React.Component() {
+export default class LittleCards extends React.Component {
   
 
     state: {
@@ -18,7 +12,16 @@ export default class LittleCards extends React.Component() {
         lvl: 'Pending',
     }
 
-    
+    getResourse = async () => {
+      let x;
+      const request = new OverwatchService;
+      request.getResourse('frst', '2873');
+    }
+
+    componentDidMount() {
+      this.getResourse();
+    }
+
   
   render() {
     return (
@@ -26,10 +29,10 @@ export default class LittleCards extends React.Component() {
           <div className="p-3 my-2 rounded">
             <Toast>
               <ToastHeader>
-                Name is {this.state.name}
+                Name is
               </ToastHeader>
               <ToastBody>
-                Your level is {this.state.lvl}
+                Your level is
               </ToastBody>
             </Toast>
           </div>
