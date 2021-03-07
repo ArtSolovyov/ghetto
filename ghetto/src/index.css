@@ -13,3 +13,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.toast-body {
+  text-align: right;
+}
+
+.toast {
+  max-width: 360px !important;
+}
