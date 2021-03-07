@@ -15,7 +15,11 @@ code {
 }
 
 .toast-body {
-  text-align: right;
+  text-align: left !important;
+}
+
+.toast-body span b {
+  text-align: right !important;
 }
 
 .toast {

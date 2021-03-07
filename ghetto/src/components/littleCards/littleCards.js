@@ -2,6 +2,7 @@ import React from 'react';
 import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 import Spinner from '../spinner/spinner';
 
+
 export default class LittleCards extends React.Component {
   
   constructor(props) {
@@ -19,28 +20,28 @@ export default class LittleCards extends React.Component {
     }
   }
 
-  getStats = (uName, battleTag) => {
-    let request = fetch('https://owapi.io/stats/pc/us/' + uName + '-' + battleTag)
-    .then(item => item.json()
+  getStats = () => {
+    fetch('https://owapi.io/stats/pc/us/frst-2873')
+    .then(item => item.json())
     .then(item => {
       this.setState({ 
         statistics: {
           username: item.username,
           level: item.level,
-          wins: +item.stats.game.competitive[2].value + item.stats.game.quickplay[2].value,
-          loses: +item.stats.game.competitive[0].value + item.stats.game.quickplay[0].value,
+          wins: item.stats.game.competitive[2].value + item.stats.game.quickplay[2].value,
+          loses: item.stats.game.competitive[0].value + item.stats.game.quickplay[0].value,
           bestHero: item.stats.top_heroes.quickplay.games_won[0].hero,
           dealedDmg: item.stats.combat.quickplay[0].value,
           healCount: item.stats.assists.quickplay[1].value,
         }
       });
       console.log(item);
-    }));
+    });
   }
   
 
   componentDidMount() {
-    this.getStats('frst', '2873')
+    this.getStats();
   }
 
   componentDidUpdate() {
@@ -49,7 +50,7 @@ export default class LittleCards extends React.Component {
 
   render() {
 
-    const {name, level, wins, loses, bestHero, dealedDmg, healCount} = this.state.statistics;
+    const {username, level, wins, loses, bestHero, dealedDmg, healCount} = this.state.statistics;
 
     const toaster = () => {
       if (this.state.statistics.username === 'pending...') {
@@ -60,19 +61,19 @@ export default class LittleCards extends React.Component {
         return(
           <>
           <ToastBody>
-                Уровень: <b>{level}</b>
+                Уровень: <span><b>{level}</b></span>
               </ToastBody>
               <ToastBody>
-                Соотношение побед к поражениям: <b>{wins} / {loses}</b>
+                Соотношение побед к поражениям: <span><b>{wins} / {loses}</b></span>
               </ToastBody>
               <ToastBody>
-              Лучший герой: <b>{bestHero}</b>
+              Лучший герой: <span><b>{bestHero}</b></span>
               </ToastBody>
               <ToastBody>
-                Всего нанесено урона: <b>{dealedDmg}</b>
+                Всего нанесено урона: <span><b>{dealedDmg}</b></span>
               </ToastBody>
               <ToastBody>
-                Всего восстановлено здоровья: <b>{healCount}</b>
+                Всего восстановлено здоровья: <span><b>{healCount}</b></span>
               </ToastBody>
           </>
         )
@@ -84,9 +85,9 @@ export default class LittleCards extends React.Component {
           <div className="p-3 my-2 rounded">
             <Toast>
               <ToastHeader>
-                Игрок: <b>{name}</b>
+                Игрок: <b>{username}</b>
               </ToastHeader>
-              {toaster}
+              {toaster()}
             </Toast>
           </div>
         </div>
