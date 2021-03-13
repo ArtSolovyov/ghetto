@@ -1,12 +1,13 @@
 .jumbotron {
     margin-left: auto;
     top: 10px;
-    width: 40%;
-    height: 50%;
+    /* width: 45%; */
+    /* height: 50%; */
 }
 
 .jumbotronWrapper {
     padding-top: 10px;
     position: absolute;
     left: 95vh;
+    padding-right: 5vh;
 }

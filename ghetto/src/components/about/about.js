@@ -11,7 +11,7 @@ const About = (props) => {
         <hr className="my-2" />
         <p>Приложение будет обновляться и поддерживаться, если лень не будет.</p>
         <p className="lead">
-          <Button color="primary">Пиши мне в телеге</Button>
+          <Button color="primary" href="tg://resolve?domain=arthursolo">Пиши мне в телеге</Button>
         </p>
       </Jumbotron>
     </div>

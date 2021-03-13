@@ -48,7 +48,7 @@ const Header = (props) => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <NavbarText>tg @arthursolo</NavbarText>
+          <NavbarText>tg <a href="tg://resolve?domain=arthursolo">@arthursolo</a></NavbarText>
         </Collapse>
       </Navbar>
     </div>

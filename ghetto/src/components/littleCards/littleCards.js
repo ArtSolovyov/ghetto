@@ -17,12 +17,15 @@ export default class LittleCards extends React.Component {
         dealedDmg: 'Загрузка...',
         healCount: 'Загрузка...',
         heroImg: 'Загрузка...',
+        portrait: ' ',
       },
     }
   }
 
-  getStats = async () => {
-    let data = await Api('frst', '2873');
+
+  getStats = async (username, id) => {
+    try {
+      let data = await Api(username, id);
     console.log(data);
     
     this.setState({ 
@@ -35,21 +38,23 @@ export default class LittleCards extends React.Component {
         dealedDmg: data.stats.combat.quickplay[0].value,
         healCount: data.stats.assists.quickplay[1].value,
         heroImg: data.stats.top_heroes.quickplay.games_won[0].img,
+        portrait: data.portrait,
       }
     });
-  }
-
-  componentDidMount() {
-    this.getStats();
+    } catch {
+      alert('hiunya');
+    }
   }
 
   componentDidUpdate() {
-    console.log(this.state);
+    this.getStats(this.props.username, this.props.id);
   }
+
+  
 
   render() {
 
-    const {username, level, wins, loses, bestHero, dealedDmg, healCount, heroImg} = this.state.statistics;
+    const {username, level, wins, loses, bestHero, dealedDmg, healCount, heroImg, portrait} = this.state.statistics;
 
     const toaster = () => {
       if (this.state.statistics.username === 'Загрузка...') {
@@ -59,7 +64,7 @@ export default class LittleCards extends React.Component {
       } else {
         return(
           <div>
-              <div className='heroImg'><img src={heroImg} alt='pending'></img></div>
+              <div className='heroImg'><img src={heroImg} style={{borderRadius: '100px'}} alt='pending'></img></div>
               <ToastBody>
                 Уровень: <span><b>{level}</b></span>
               </ToastBody>
@@ -84,7 +89,9 @@ export default class LittleCards extends React.Component {
         <div>
           <div className="p-3 my-2 rounded">
             <Toast>
+            <img src={portrait} style={{height: "30px", float: 'right'}} alt=''></img>
               <ToastHeader>
+              
                 Игрок: <b>{username}</b>
               </ToastHeader>
               {toaster()}
