@@ -8,18 +8,12 @@ import './App.css';
 export default class App extends React.Component {
 
   state = {
-    query: {
-      username: '',
-      id: '',
-    },
+    data: {},
   }
 
-  getQuery = (name, bnetId) => {
+  getQuery = (data) => {
     this.setState({
-      query: {
-        username: name,
-        id: bnetId,
-      }
+      data: data,
     })
 
     console.log(this.state);
@@ -30,9 +24,8 @@ export default class App extends React.Component {
       <div className="App">
         <Header />
         <About />
-        <Form getQuery={this.getQuery} />
-        <LittleCards username={this.state.query.username}
-        id={this.state.query.id} />
+        <Form getData={this.getQuery}/>
+        <LittleCards data={this.state.data}/>
       </div>
     );
   }

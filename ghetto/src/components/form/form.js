@@ -1,15 +1,23 @@
 import React from 'react';
 import {Input} from 'reactstrap';
 import Mag from '../../images/mag.png';
+import Api from '../api/api';
+
+
 
 const Form = (props) => {
-
-
-    let getValues = () => {
+    
+    let getValues = async () => {
         const username = document.querySelector('.nameInput').value;
         const id = document.querySelector('.idInput').value;
+        let data = {};
         if (id && username) {
-            props.getQuery(username, id);
+            try {
+                data = await Api(username, id);
+                props.getData(data);
+            } catch {
+                alert('чото случилось с запросом');
+            }
         }
     }
 

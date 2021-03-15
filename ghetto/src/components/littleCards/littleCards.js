@@ -1,7 +1,6 @@
 import React from 'react';
 import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 import Spinner from '../spinner/spinner';
-import Api from '../api/api';
 
 export default class LittleCards extends React.Component {
   
@@ -9,46 +8,41 @@ export default class LittleCards extends React.Component {
     super(props);
     this.state = {
       statistics: {
-        username: 'Загрузка...',
-        level: 'Загрузка...',
-        wins: 'Загрузка...',
-        loses: 'Загрузка...',
-        bestHero: 'Загрузка...',
-        dealedDmg: 'Загрузка...',
-        healCount: 'Загрузка...',
-        heroImg: 'Загрузка...',
-        portrait: ' ',
-      },
-    }
-  }
-
-
-  getStats = async (username, id) => {
-    try {
-      let data = await Api(username, id);
-    console.log(data);
-    
-    this.setState({ 
-      statistics: {
-        username: data.username,
-        level: data.level,
-        wins: data.stats.game.competitive[2].value + data.stats.game.quickplay[2].value,
-        loses: data.stats.game.competitive[0].value + data.stats.game.quickplay[0].value,
-        bestHero: data.stats.top_heroes.quickplay.games_won[0].hero,
-        dealedDmg: data.stats.combat.quickplay[0].value,
-        healCount: data.stats.assists.quickplay[1].value,
-        heroImg: data.stats.top_heroes.quickplay.games_won[0].img,
-        portrait: data.portrait,
+        username: this.props.data.username,
+        level: this.props.data.level,
+        wins: this.props.data.stats.game.competitive[2].value + this.props.data.stats.game.quickplay[2].value,
+        loses: this.props.data.stats.game.competitive[0].value + this.props.data.stats.game.quickplay[0].value,
+        bestHero: this.props.data.stats.top_heroes.quickplay.games_won[0].hero,
+        dealedDmg: this.props.data.stats.combat.quickplay[0].value,
+        healCount: this.props.data.stats.assists.quickplay[1].value,
+        heroImg: this.props.data.stats.top_heroes.quickplay.games_won[0].img,
+        portrait: this.props.data.portrait,
       }
-    });
-    } catch {
-      alert('hiunya');
     }
   }
 
-  componentDidUpdate() {
-    this.getStats(this.props.username, this.props.id);
-  }
+
+  // changeState = (data) => {
+  //   this.setState({ 
+  //     statistics: {
+  //       username: data.username,
+  //       level: data.level,
+  //       wins: data.stats.game.competitive[2].value + data.stats.game.quickplay[2].value,
+  //       loses: data.stats.game.competitive[0].value + data.stats.game.quickplay[0].value,
+  //       bestHero: data.stats.top_heroes.quickplay.games_won[0].hero,
+  //       dealedDmg: data.stats.combat.quickplay[0].value,
+  //       healCount: data.stats.assists.quickplay[1].value,
+  //       heroImg: data.stats.top_heroes.quickplay.games_won[0].img,
+  //       portrait: data.portrait,
+  //     }
+  //   });
+  // }
+
+  // componentDidMount() {
+  //   if (this.props.data.username) {
+  //     this.changeState(this.props.data);
+  //   }
+  // }
 
   
 
