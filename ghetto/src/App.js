@@ -20,12 +20,15 @@ export default class App extends React.Component {
   }
 
   render() {
+
+    const {data} = this.state;
+
     return (
       <div className="App">
         <Header />
-        <About />
         <Form getData={this.getQuery}/>
-        <LittleCards data={this.state.data}/>
+        <LittleCards data={data}/>
+        <About />
       </div>
     );
   }
