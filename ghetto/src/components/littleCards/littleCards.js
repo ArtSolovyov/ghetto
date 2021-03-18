@@ -2,90 +2,38 @@ import React from 'react';
 import { Toast, ToastBody, ToastHeader } from 'reactstrap';
 import Spinner from '../spinner/spinner';
 
-export default class LittleCards extends React.Component {
-  
-  constructor(props) {
-    super(props);
-    this.state = {
-      statistics: {
-        username: 'Загрузка...',
-        level: 'Загрузка...',
-        wins: 'Загрузка...',
-        loses: 'Загрузка...',
-        bestHero: 'Загрузка...',
-        dealedDmg: 'Загрузка...',
-        healCount: 'Загрузка...',
-        heroImg: 'Загрузка...',
-        portrait: 'Загрузка...',
-      }
+const LittleCards = ({data}) => {
+  let statistics = {};
+  if (data.username) {
+    statistics = {
+      username: data.username,
+      level: data.level,
+      wins: data.stats.game.competitive[2].value + data.stats.game.quickplay[2].value,
+      loses: data.stats.game.competitive[0].value + data.stats.game.quickplay[0].value,
+      bestHero: data.stats.top_heroes.quickplay.games_won[0].hero,
+      dealedDmg: data.stats.combat.quickplay[0].value,
+      healCount: data.stats.assists.quickplay[1].value,
+      heroImg: data.stats.top_heroes.quickplay.games_won[0].img,
+      portrait: data.portrait,
+    }
+  } else {
+    statistics = {
+      username: 'Загрузка...',
+      level: 'Загрузка...',
+      wins: 'Загрузка...',
+      loses:  'Загрузка...',
+      bestHero: 'Загрузка...',
+      dealedDmg: 'Загрузка...',
+      healCount: 'Загрузка...',
+      heroImg: 'Загрузка...',
+      portrait: 'Загрузка...',
     }
   }
 
+  const {username, level, wins, loses, bestHero, dealedDmg, healCount, heroImg, portrait} = statistics;
 
-
-
-  changeState = () => {
-    this.setState({ 
-      statistics: {
-        username: this.props.data.username,
-        level: this.props.data.level,
-        wins: this.props.data.stats.game.competitive[2].value + this.props.data.stats.game.quickplay[2].value,
-        loses: this.props.data.stats.game.competitive[0].value + this.props.data.stats.game.quickplay[0].value,
-        bestHero: this.props.data.stats.top_heroes.quickplay.games_won[0].hero,
-        dealedDmg: this.props.data.stats.combat.quickplay[0].value,
-        healCount: this.props.data.stats.assists.quickplay[1].value,
-        heroImg: this.props.data.stats.top_heroes.quickplay.games_won[0].img,
-        portrait: this.props.data.portrait,
-      }
-    });
-  }
-
-  componentDidMount() {
-    console.log(this.props.data);
-    if (this.props.data.username) {
-      this.changeState(this.props.data);
-      console.log(this.state);
-    }
-  }
-
-  
-
-  render() {
-
-    let statistics = new Object();
-
-    if (this.props.username) {
-      statistics = {
-        username: this.props.data.username,
-        level: this.props.data.level,
-        wins: this.props.data.stats.game.competitive[2].value + this.props.data.stats.game.quickplay[2].value,
-        loses: this.props.data.stats.game.competitive[0].value + this.props.data.stats.game.quickplay[0].value,
-        bestHero: this.props.data.stats.top_heroes.quickplay.games_won[0].hero,
-        dealedDmg: this.props.data.stats.combat.quickplay[0].value,
-        healCount: this.props.data.stats.assists.quickplay[1].value,
-        heroImg: this.props.data.stats.top_heroes.quickplay.games_won[0].img,
-        portrait: this.props.data.portrait,
-      }
-    } else {
-      statistics = {
-        username: 'Загрузка...',
-        level: 'Загрузка...',
-        wins: 'Загрузка...',
-        loses: 'Загрузка...',
-        bestHero: 'Загрузка...',
-        dealedDmg: 'Загрузка...',
-        healCount: 'Загрузка...',
-        heroImg: 'Загрузка...',
-        portrait: 'Загрузка...',
-      }
-    }
-    
-    
-
-    const {username, level, wins, loses, bestHero, dealedDmg, healCount, heroImg, portrait} = statistics;
-
-    const toaster = () => {
-      if (this.state.statistics.username === 'Загрузка...') {
+  const toaster = () => {
+      if (username === 'Загрузка...') {
         return(
           <Spinner />
         )
@@ -113,7 +61,7 @@ export default class LittleCards extends React.Component {
       }
     }
 
-    return (
+  return (
         <div>
           <div className="p-3 my-2 rounded">
             <Toast>
@@ -127,6 +75,6 @@ export default class LittleCards extends React.Component {
           </div>
         </div>
       );
-  }
-    
 };
+
+export default LittleCards;

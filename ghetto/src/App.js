@@ -16,7 +16,6 @@ export default class App extends React.Component {
       data: data,
     })
 
-    console.log(this.state);
   }
 
   render() {
